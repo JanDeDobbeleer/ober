@@ -1,0 +1,10 @@
+version: 0.5.{build}
+configuration: Release
+before_build:
+- cmd: nuget restore
+build:
+  project: Ober.sln
+  verbosity: minimal
+artifacts:
+- path: bin\Release\Ober.exe
+  name: ober
