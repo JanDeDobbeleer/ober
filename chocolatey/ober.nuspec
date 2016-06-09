@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Do not remove this test for UTF-8: if “Ω” doesn’t appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>ober</id>
+    <title>ober (Portable)</title>
+    <version>1.0</version>
+    <authors>JanJoris</authors>
+    <owners>JanJoris</owners>
+    <summary>Windows Store App submission API tool</summary>
+    <description>
+      **ober**
+
+      This CLI tool will help you submit .appxupload packages straight to the Windows Store.
+      It uses the submission API to achieve this.
+    </description>
+    <projectUrl>https://github.com/JanJoris/ober</projectUrl>
+    <packageSourceUrl>https://github.com/JanJoris/ober/chocolatey</packageSourceUrl>
+    <projectSourceUrl>https://github.com/JanJoris/ober</projectSourceUrl>
+    <tags>uwp submission API windows store appxupload submit ci cd continuous deployment delivery C# console cli</tags>
+    <copyright>Copyright (c) 2016 JanJoris</copyright>
+    <licenseUrl>https://github.com/JanJoris/ober/blob/master/LICENSE</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+  </metadata>
+</package>
