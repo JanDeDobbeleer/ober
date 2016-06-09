@@ -51,3 +51,5 @@ ober submit -a "<appID>" -f "<flightID>" -p "<zip location>"
 ```
 
 If you need a more detailed log (WIP, it might break the progress indicators for now), you can use `-v` to toggle verbose logging.
+
+Jan-Joris, Ober and Out!
