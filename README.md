@@ -1,7 +1,7 @@
 ober
 ====
 
-[![Build status](https://ci.appveyor.com/api/projects/status/exxw782extx9sgm2/branch/master?svg=true)](https://ci.appveyor.com/project/JanJoris/ober/branch/master) [![GitHub release](https://img.shields.io/github/release/janjoris/ober.svg)](https://github.com/JanJoris/ober/releases)
+[![Build status](https://ci.appveyor.com/api/projects/status/el74wu2044x5tgga?svg=true)](https://ci.appveyor.com/project/JanJoris/ober) [![GitHub release](https://img.shields.io/github/release/janjoris/ober.svg)](https://github.com/JanJoris/ober/releases)
 
 ##  Automate your Windows Store App deploys
 

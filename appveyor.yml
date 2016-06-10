@@ -105,6 +105,9 @@
 
 # default build config, no deployment, no artifacts
 -
+  branches:
+    except:
+      - master
   version: 1.0.{build}
   configuration: Release
   before_build:
