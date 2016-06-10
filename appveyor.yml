@@ -3,6 +3,7 @@
   branches:
     only:
       - master
+  skip_tags: true
   version: 0.5.{build}
   configuration: Release
   environment:
@@ -86,7 +87,7 @@
 
       Write-Host "Setting version number: $versionNumber"
 
-      (Get-Content '.\ober.nuspec' -Raw).Replace('%version%', $versionNumber) | Out-File -Encoding 'UTF8' '.\ober.nuspec'
+      (Get-Content '.\ober.portable.nuspec' -Raw).Replace('%version%', $versionNumber) | Out-File -Encoding 'UTF8' '.\ober.portable.nuspec'
 
       Write-Host 'Creating package'
 
@@ -94,13 +95,13 @@
 
       Write-Host 'Uploading artifact'
 
-      Push-AppveyorArtifact ".\ober.$versionNumber.nupkg"
+      Push-AppveyorArtifact ".\ober.portable.$versionNumber.nupkg"
 
       choco apiKey -k $ch_key -source https://chocolatey.org/
 
       Write-Host 'Pushing package to chocolatey'
 
-      choco push "ober.$versionNumber.nupkg"
+      choco push "ober.portable.$versionNumber.nupkg"
 
 
 # default build config, no deployment, no artifacts
@@ -108,6 +109,7 @@
   branches:
     except:
       - master
+  skip_tags: true
   version: 1.0.{build}
   configuration: Release
   before_build:
