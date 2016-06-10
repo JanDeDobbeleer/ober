@@ -1,0 +1,5 @@
+Verification is intended to assist the Chocolatey moderators and community
+in verifying that this package's contents are trustworthy.
+
+1) Download binary from https://github.com/JanJoris/ober/releases/download/<version>1.0<version>/ober.exe
+2) Compare checksums

@@ -78,7 +78,7 @@
 
       Write-Host 'Copying artifact'
 
-      Copy-Item -Path .\bin\Release\Ober.exe -Destination .\chocolatey\ober.exe
+      Copy-Item -Path .\bin\Release\Ober.exe -Destination .\chocolatey\tools\ober.exe
 
       Write-Host 'Changing location'
 
@@ -86,7 +86,7 @@
 
       Write-Host "Setting version number: $versionNumber"
 
-      (Get-Content '.\ober.nuspec' -Raw).Replace("<version>1.0</version>", "<version>$versionNumber</version>") | Out-File '.\ober.nuspec'
+      (Get-Content '.\ober.nuspec' -Raw).Replace('%version%', $versionNumber) | Out-File -Encoding 'UTF8' '.\ober.nuspec'
 
       Write-Host 'Creating package'
 

@@ -4,7 +4,7 @@
   <metadata>
     <id>ober</id>
     <title>ober (Portable)</title>
-    <version>1.0</version>
+    <version>%version%</version>
     <authors>JanJoris</authors>
     <owners>JanJoris</owners>
     <summary>Windows Store App submission API tool</summary>
@@ -16,10 +16,10 @@
     </description>
     <projectUrl>https://github.com/JanJoris/ober</projectUrl>
     <packageSourceUrl>https://github.com/JanJoris/ober/chocolatey</packageSourceUrl>
-    <projectSourceUrl>https://github.com/JanJoris/ober</projectSourceUrl>
     <tags>uwp submission API windows store appxupload submit ci cd continuous deployment delivery C# console cli</tags>
-    <copyright>Copyright (c) 2016 JanJoris</copyright>
+    <copyright>© 2016 JanJoris</copyright>
     <licenseUrl>https://github.com/JanJoris/ober/blob/master/LICENSE</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <releaseNotes>https://github.com/JanJoris/ober/releases/tag/%version%</releaseNotes>
   </metadata>
 </package>
