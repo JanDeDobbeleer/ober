@@ -96,6 +96,8 @@
 
       (Get-Content '.\ober.portable.nuspec' -Raw).Replace('%version%', $versionNumber) | Out-File -Encoding 'UTF8' '.\ober.portable.nuspec'
 
+      (Get-Content '.\tools\VERIFICATION.txt' -Raw).Replace('%version%', $versionNumber) | Out-File -Encoding 'UTF8' '.\tools\VERIFICATION.txt'
+
       Write-Host 'Creating package'
 
       cpack
