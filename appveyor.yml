@@ -1,123 +1,120 @@
 #release, build and deploy
--
-  branches:
-    only:
-      - master
-  skip_tags: true
-  version: 0.5.{build}
-  image: Visual Studio 2015
-  configuration: Release
-  platform: Any CPU
-  environment:
-    GH_KEY:
-      secure: 7CipYchiaJLIPf5MRNnJ2+Nk7dm+FxWkEHlASCcskJbMz+jbdz/qiseUeKCkQKHC
-    CH_KEY:
-      secure: TzSbce5fl5R48muEwdnHHl9r1IwKIZ/0qW+D/jbpEIZnGvObscfpymlR20ZfV7PW
-  assembly_info:
-    patch: true
-    file: AssemblyInfo.*
-    assembly_version: "{version}.0"
-    assembly_file_version: "{version}.0"
-  before_build:
-  - cmd: nuget restore
-  build:
-    project: Ober.sln
-    verbosity: minimal
-  artifacts:
-  - path: bin\Release\Ober.exe
-    name: ober
-  deploy_script:
-  - ps: >-
-      #Create GitHub release
+# -
+#   branches:
+#     only:
+#       - master
+#   skip_tags: true
+#   version: 0.5.{build}
+#   image: Visual Studio 2015
+#   configuration: Release
+#   platform: Any CPU
+#   environment:
+#     GH_KEY:
+#       secure: 7CipYchiaJLIPf5MRNnJ2+Nk7dm+FxWkEHlASCcskJbMz+jbdz/qiseUeKCkQKHC
+#     CH_KEY:
+#       secure: TzSbce5fl5R48muEwdnHHl9r1IwKIZ/0qW+D/jbpEIZnGvObscfpymlR20ZfV7PW
+#   assembly_info:
+#     patch: true
+#     file: AssemblyInfo.*
+#     assembly_version: "{version}.0"
+#     assembly_file_version: "{version}.0"
+#   before_build:
+#   - cmd: nuget restore
+#   build:
+#     project: Ober.sln
+#     verbosity: minimal
+#   artifacts:
+#   - path: bin\Release\Ober.exe
+#     name: ober
+#   deploy_script:
+#   - ps: >-
+#       #Create GitHub release
 
-      $versionNumber = $ENV:APPVEYOR_BUILD_VERSION
+#       $versionNumber = $ENV:APPVEYOR_BUILD_VERSION
 
-      $gh_key = $env:GH_KEY
+#       $gh_key = $env:GH_KEY
 
-      Write-Host 'Starting GitHub release'
+#       Write-Host 'Starting GitHub release'
 
-      $releaseData = @{
-          tag_name         = $versionNumber
-          target_commitish = 'master'
-          name             = $versionNumber
-          draft            = $false
-          prerelease       = $false
-      }
+#       $releaseData = @{
+#           tag_name         = $versionNumber
+#           target_commitish = 'master'
+#           name             = $versionNumber
+#           draft            = $false
+#           prerelease       = $false
+#       }
 
-      $auth = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($gh_key + ':x-oauth-basic'))
+#       $auth = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($gh_key + ':x-oauth-basic'))
 
-      $releaseParams = @{
-          Uri         = 'https://api.github.com/repos/janjoris/ober/releases'
-          Method      = 'POST'
-          Headers     = @{
-              Authorization = $auth
-          }
-          ContentType = 'application/json'
-          Body        = (ConvertTo-Json -InputObject $releaseData -Compress)
-      }
+#       $releaseParams = @{
+#           Uri         = 'https://api.github.com/repos/janjoris/ober/releases'
+#           Method      = 'POST'
+#           Headers     = @{
+#               Authorization = $auth
+#           }
+#           ContentType = 'application/json'
+#           Body        = (ConvertTo-Json -InputObject $releaseData -Compress)
+#       }
 
-      $result = Invoke-RestMethod @releaseParams
+#       $result = Invoke-RestMethod @releaseParams
 
-      $uploadUri = $result | Select-Object -ExpandProperty upload_url
+#       $uploadUri = $result | Select-Object -ExpandProperty upload_url
 
-      $uploadUri = $uploadUri -creplace '\{\?name,label\}'  #, "?name=ober.exe"
+#       $uploadUri = $uploadUri -creplace '\{\?name,label\}'  #, "?name=ober.exe"
 
-      $uploadUri = $uploadUri + "?name=ober.exe"
+#       $uploadUri = $uploadUri + "?name=ober.exe"
 
-      $uploadParams = @{
-          Uri         = $uploadUri
-          Method      = 'POST'
-          Headers     = @{
-              Authorization = $auth
-          }
-          ContentType = 'application/zip'
-          InFile      = ".\bin\Release\Ober.exe"
-      }
+#       $uploadParams = @{
+#           Uri         = $uploadUri
+#           Method      = 'POST'
+#           Headers     = @{
+#               Authorization = $auth
+#           }
+#           ContentType = 'application/zip'
+#           InFile      = ".\bin\Release\Ober.exe"
+#       }
 
-      $result = Invoke-RestMethod @uploadParams
+#       $result = Invoke-RestMethod @uploadParams
 
-      Write-Host 'GitHub release completed'
+#       Write-Host 'GitHub release completed'
 
-      # Create Chocolately Package
+#       # Create Chocolately Package
 
-      Write-Host 'Starting Chocolatey deploy'
+#       Write-Host 'Starting Chocolatey deploy'
 
-      $ch_key = $env:CH_KEY
+#       $ch_key = $env:CH_KEY
 
-      Write-Host 'Copying artifact'
+#       Write-Host 'Copying artifact'
 
-      Copy-Item -Path .\bin\Release\Ober.exe -Destination .\chocolatey\tools\ober.exe
+#       Copy-Item -Path .\bin\Release\Ober.exe -Destination .\chocolatey\tools\ober.exe
 
-      Write-Host 'Changing location'
+#       Write-Host 'Changing location'
 
-      Set-Location -Path .\chocolatey
+#       Set-Location -Path .\chocolatey
 
-      Write-Host "Setting version number: $versionNumber"
+#       Write-Host "Setting version number: $versionNumber"
 
-      (Get-Content '.\ober.portable.nuspec' -Raw).Replace('%version%', $versionNumber) | Out-File -Encoding 'UTF8' '.\ober.portable.nuspec'
+#       (Get-Content '.\ober.portable.nuspec' -Raw).Replace('%version%', $versionNumber) | Out-File -Encoding 'UTF8' '.\ober.portable.nuspec'
 
-      (Get-Content '.\tools\VERIFICATION.txt' -Raw).Replace('%version%', $versionNumber) | Out-File -Encoding 'UTF8' '.\tools\VERIFICATION.txt'
+#       (Get-Content '.\tools\VERIFICATION.txt' -Raw).Replace('%version%', $versionNumber) | Out-File -Encoding 'UTF8' '.\tools\VERIFICATION.txt'
 
-      Write-Host 'Creating package'
+#       Write-Host 'Creating package'
 
-      cpack
+#       cpack
 
-      Write-Host 'Uploading artifact'
+#       Write-Host 'Uploading artifact'
 
-      Push-AppveyorArtifact ".\ober.portable.$versionNumber.nupkg"
+#       Push-AppveyorArtifact ".\ober.portable.$versionNumber.nupkg"
 
-      choco apiKey -k $ch_key -source https://chocolatey.org/
+#       choco apiKey -k $ch_key -source https://chocolatey.org/
 
-      Write-Host 'Pushing package to chocolatey'
+#       Write-Host 'Pushing package to chocolatey'
 
-      choco push "ober.portable.$versionNumber.nupkg"
+#       choco push "ober.portable.$versionNumber.nupkg"
 
 
 # default build config, no deployment, no artifacts
 -
-  branches:
-    except:
-      - master
   skip_tags: true
   version: 0.0.{build}
   image: Visual Studio 2015
