@@ -20,9 +20,7 @@
     assembly_file_version: "{version}.0"
   before_build:
   - cmd: nuget restore
-  build:
-    project: Ober.sln
-    verbosity: minimal
+  build: off
   artifacts:
   - path: bin\Release\Ober.exe
     name: ober
