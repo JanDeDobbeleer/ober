@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ober.Tool", "Ober.Tool.csproj", "{1A6D5FC1-BE5F-4B7D-8324-1BCE08727550}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ober.Tool", "Ober\Ober.Tool.csproj", "{1A6D5FC1-BE5F-4B7D-8324-1BCE08727550}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

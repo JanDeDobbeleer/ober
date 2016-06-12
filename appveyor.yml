@@ -86,7 +86,7 @@
 
 #       Write-Host 'Copying artifact'
 
-#       Copy-Item -Path .\bin\Release\Ober.exe -Destination .\chocolatey\tools\ober.exe
+#       Copy-Item -Path .\Ober\bin\Release\Ober.exe -Destination .\chocolatey\tools\ober.exe
 
 #       Write-Host 'Changing location'
 
