@@ -2,19 +2,22 @@
 using System.IO;
 using System.Threading.Tasks;
 using Ober.Tool.Interfaces;
+using Ober.Tool.Localization;
 using YamlDotNet.Serialization;
 
 namespace Ober.Tool.Commands
 {
-    internal abstract class CommandBase
+    public abstract class CommandBase
     {
         protected readonly IStoreClient Client;
         protected readonly ILogger Logger;
+        protected readonly IStringProvider StringProvider;
 
-        protected CommandBase(IStoreClient client, ILogger logger)
+        protected CommandBase(IStoreClient client, ILogger logger, IStringProvider stringProvider)
         {
             Client = client;
             Logger = logger;
+            StringProvider = stringProvider;
         }
 
         protected abstract Task<int> CommandLogic();
@@ -25,15 +28,15 @@ namespace Ober.Tool.Commands
             Config.Config config;
             if (!TryLoadConfig(configFile, out config))
                 return -1;
-            Logger.InfoWithProgress("Logging in");
+            Logger.InfoWithProgress(StringProvider.GetString(Strings.LoginProgress));
             var didLogin = await Client.Login(config.Credentials.ClientId, config.Credentials.Key, config.Credentials.TenantId);
             Logger.StopProgress();
             if (didLogin)
             {
-                Logger.Debug("Login successful!");
+                Logger.Debug(StringProvider.GetString(Strings.LoginSuccess));
                 return await CommandLogic();
             }
-            Console.WriteLine("Login unsuccessful, please provide the correct credentials.");
+            Logger.Error(StringProvider.GetString(Strings.LoginError));
             return -1;
         }
 
@@ -48,8 +51,8 @@ namespace Ober.Tool.Commands
             }
             catch (Exception)
             {
-                Logger.Error($"Ì'm unable to load the config file at {configFile}, would you mind to verify if the file exists and is correctly configured?");
-                Logger.Info(_configTemplate);
+                Logger.Error(string.Format(StringProvider.GetString(Strings.ConfigError), configFile));
+                Logger.Info(StringProvider.GetString(Strings.ConfigTemplate));
                 return false;
             }
         }
@@ -59,14 +62,14 @@ namespace Ober.Tool.Commands
             config = null;
             if (File.Exists(configFile))
             {
-                Logger.Debug($"Config file found at {configFile}");
+                Logger.Debug(string.Format(StringProvider.GetString(Strings.ConfigFound), configFile));
                 var configText = File.OpenText(configFile);
                 var deserializer = new Deserializer();
                 config = deserializer.Deserialize<Config.Config>(configText);
                 return ValidateConfig(config, configFile);
             }
-            Logger.Error($"the config file cannot be found at {configFile}, would you mind adding one to proceed?");
-            Logger.Info(_configTemplate);
+            Logger.Error(string.Format(StringProvider.GetString(Strings.ConfigNotFound), configFile));
+            Logger.Info(StringProvider.GetString(Strings.ConfigTemplate));
             return false;
         }
 
@@ -76,14 +79,12 @@ namespace Ober.Tool.Commands
                     || string.IsNullOrWhiteSpace(config.Credentials?.Key)
                     || string.IsNullOrWhiteSpace(config.Credentials?.TenantId))
             {
-                Logger.Error($"it seems the configfile at {configFile} is incomplete or malformed.");
-                Logger.Info(_configTemplate);
+                Logger.Error(string.Format(StringProvider.GetString(Strings.ConfigMalformed), configFile));
+                Logger.Info(StringProvider.GetString(Strings.ConfigTemplate));
                 return false;
             }
-            Logger.Debug("Successfully loaded config file.");
+            Logger.Debug(StringProvider.GetString(Strings.ConfigSuccess));
             return true;
         }
-
-        private string _configTemplate = "\nThe config file menu is:\n\nCredentials:\n\tClientId: <clientid>\n\tKey: <key>\n\tTenantId: <tenantid>";
     }
 }

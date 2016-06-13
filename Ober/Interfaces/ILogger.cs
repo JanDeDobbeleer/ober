@@ -1,6 +1,6 @@
 ﻿namespace Ober.Tool.Interfaces
 {
-    internal interface ILogger
+    public interface ILogger
     {
         bool Verbose { get; set; }
         void Debug(string message);

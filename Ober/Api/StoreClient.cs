@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Newtonsoft.Json.Linq;
 using Ober.Tool.Interfaces;
+using Ober.Tool.Localization;
 
 namespace Ober.Tool.Api
 {
@@ -20,7 +21,12 @@ namespace Ober.Tool.Api
         private readonly string _commitRelease = "/v1.0/my/applications/{0}/submissions/{1}/commit";
         private readonly string _commitFlight = "/v1.0/my/applications/{0}/flights/{1}/submissions/{2}/commit";
 
-        public StoreClient(ILogger logger): base(logger) { }
+        private readonly IStringProvider _stringProvider;
+
+        public StoreClient(ILogger logger, IStringProvider stringProvider) : base(logger)
+        {
+            _stringProvider = stringProvider;
+        }
 
         public async Task<bool> Login(string clientId, string key, string tenantId)
         {
@@ -37,10 +43,9 @@ namespace Ober.Tool.Api
             HttpClient = null;
             if (!response.Item2.Equals(HttpStatusCode.OK))
             {
-                Logger.Debug($"Error logging in, response statuscode = {response.Item2}");
+                Logger.Debug(string.Format(_stringProvider.GetString(Strings.DebugLoginError), response.Item2));
                 return false;
             }
-            Logger.Debug("Login successful, setting accesstoken for future use.");
             AccessToken = response.Item1["access_token"].ToString();
             return true;
         }

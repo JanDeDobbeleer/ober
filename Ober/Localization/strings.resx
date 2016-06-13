@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="UploadingPackage" xml:space="preserve">
+    <value>Uploading package</value>
+  </data>
+  <data name="CommandNotYetImplemented" xml:space="preserve">
+    <value>This command has not yet been implemented</value>
+  </data>
+  <data name="ValidatePackageNonExistant" xml:space="preserve">
+    <value>the provided packages file at {0} does not exist.</value>
+  </data>
+  <data name="ValidatePackageNoPackages" xml:space="preserve">
+    <value>the provided packages file at {0} does not contain any .appxupload package.</value>
+  </data>
+  <data name="ValidatePackageNoZip" xml:space="preserve">
+    <value>the provided packages file at {0} is not a zip file.</value>
+  </data>
+  <data name="SubmitCommitError" xml:space="preserve">
+    <value>the submission could not be comitted.</value>
+  </data>
+  <data name="SubmitCommitSuccess" xml:space="preserve">
+    <value>The submission has been successfully comitted, sir.</value>
+  </data>
+  <data name="SubmitCommitting" xml:space="preserve">
+    <value>Committing submission</value>
+  </data>
+  <data name="SubmitCreateError" xml:space="preserve">
+    <value>I was unable to create a new submission.</value>
+  </data>
+  <data name="SubmitCreating" xml:space="preserve">
+    <value>Creating new submission</value>
+  </data>
+  <data name="SubmitUpdateError" xml:space="preserve">
+    <value>I was unable to update the submission.</value>
+  </data>
+  <data name="SubmitUpdating" xml:space="preserve">
+    <value>Updating submission</value>
+  </data>
+  <data name="SubmitUploading" xml:space="preserve">
+    <value>Uploading package</value>
+  </data>
+  <data name="VerifyParameters" xml:space="preserve">
+    <value>Would you mind to verify the provided parameters and order again?</value>
+  </data>
+  <data name="ConfigError" xml:space="preserve">
+    <value>I'm unable to load the config file at {0}, would you mind to verify if the file exists and is correctly configured?</value>
+  </data>
+  <data name="ConfigFound" xml:space="preserve">
+    <value>Config file found at {0}</value>
+  </data>
+  <data name="ConfigMalformed" xml:space="preserve">
+    <value>it seems the configfile at {0} is incomplete or malformed.</value>
+  </data>
+  <data name="ConfigNotFound" xml:space="preserve">
+    <value>the config file cannot be found at {0}, would you mind adding one to proceed?</value>
+  </data>
+  <data name="ConfigSuccess" xml:space="preserve">
+    <value>Successfully loaded config file.</value>
+  </data>
+  <data name="ConfigTemplate" xml:space="preserve">
+    <value>\nThe config file menu is:\n\nCredentials:\n\tClientId: &lt;clientid&gt;\n\tKey: &lt;key&gt;\n\tTenantId: &lt;tenantid&gt;</value>
+  </data>
+  <data name="DebugLoginError" xml:space="preserve">
+    <value>Error logging in, response statuscode = {0}</value>
+  </data>
+  <data name="LoginError" xml:space="preserve">
+    <value>Login unsuccessful, please provide the correct credentials.</value>
+  </data>
+  <data name="LoginProgress" xml:space="preserve">
+    <value>Logging in</value>
+  </data>
+  <data name="LoginSuccess" xml:space="preserve">
+    <value>Login successful!</value>
+  </data>
+</root>

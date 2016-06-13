@@ -3,7 +3,7 @@
 namespace Ober.Tool.Options
 {
     [Verb("submit", HelpText = "Create a new submission")]
-    internal class SubmitOptions: OptionsBase
+    public class SubmitOptions: OptionsBase
     {
         [Option('a', "app", Required = true, HelpText = "The ID of the application you want to create a new submission for")]
         public string Application { get; set; }

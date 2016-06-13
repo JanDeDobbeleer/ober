@@ -2,7 +2,7 @@
 
 namespace Ober.Tool.Options
 {
-    internal class OptionsBase
+    public class OptionsBase
     {
         [Option('c', "config", Required = false, HelpText = "The path to the config file containing your credentials")]
         public string ConfigFile { get; set; }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Ober.Tool.Interfaces;
+using Ober.Tool.Localization;
 using Ober.Tool.Options;
 
 namespace Ober.Tool.Commands
@@ -9,7 +10,7 @@ namespace Ober.Tool.Commands
     {
         private ListOptions _listOptions;
 
-        public ListCommand(IStoreClient client, ILogger logger) : base(client, logger) { }
+        public ListCommand(IStoreClient client, ILogger logger, IStringProvider stringProvider) : base(client, logger, stringProvider) { }
 
         public async Task<int> ListSubmissions(ListOptions options)
         {
@@ -21,7 +22,7 @@ namespace Ober.Tool.Commands
         {
             return Task<int>.Factory.StartNew(() =>
             {
-                Console.WriteLine("The list command has not yet been implemented");
+                Logger.Info(StringProvider.GetString(Strings.CommandNotYetImplemented));
                 return -1;
             });
         }

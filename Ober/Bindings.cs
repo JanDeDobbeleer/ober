@@ -2,6 +2,7 @@
 using Ober.Tool.Api;
 using Ober.Tool.Commands;
 using Ober.Tool.Interfaces;
+using Ober.Tool.Localization;
 using Ober.Tool.Logger;
 
 namespace Ober.Tool
@@ -10,6 +11,7 @@ namespace Ober.Tool
     {
         public override void Load()
         {
+            Bind<IStringProvider>().To<StringProvider>();
             Bind<ISpinner>().To<Spinner>();
             Bind<ILogger>().To<ConsoleLogger>();
             Bind<IStoreClient>().To<StoreClient>();
