@@ -76,8 +76,12 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Commands\SubmitCommandNewSubmissionTest.cs" />
     <Compile Include="Commands\CommandBaseTest.cs" />
     <Compile Include="Commands\SubmitCommandPackageTest.cs" />
+    <Compile Include="Commands\SubmitCommandCommitTests.cs" />
+    <Compile Include="Commands\SubmitCommandUpdateTests.cs" />
+    <Compile Include="Commands\SubmitCommandSuccessTests.cs" />
     <Compile Include="Extensions\PathExtensions.cs" />
     <Compile Include="Mock\MockCommandBase.cs" />
     <Compile Include="Mock\MockLogger.cs" />
@@ -100,6 +104,12 @@
     <Content Include="Files\package.zip">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Files\submission.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\submissionupdate.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Files\.invalid_config_nokey">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -118,6 +128,12 @@
     <None Include="Files\.invalid_config_notenant">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Content Include="Files\flight.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Files\flightupdate.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <Choose>

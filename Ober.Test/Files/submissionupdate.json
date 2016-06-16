@@ -1,0 +1,64 @@
+﻿{
+	"id": "submissionid",
+	"applicationCategory": "NotSet",
+	"pricing": {
+		"trialPeriod": "NoFreeTrial",
+		"marketSpecificPricings": {},
+		"sales": [{
+			"name": "string",
+			"basePriceId": "Free",
+			"startDate": "2016-03-10T23:07:01.499Z",
+			"endDate": "2016-03-10T23:07:01.499Z",
+			"marketSpecificPricings": {}
+		}],
+		"priceId": "Free"
+	},
+	"visibility": "NotSet",
+	"targetPublishMode": "NotSet",
+	"targetPublishDate": "2016-03-10T23:07:01.499Z",
+	"listings": {},
+	"hardwarePreferences": ["Undefined"],
+	"hardwareRequirements": ["Undefined"],
+	"automaticBackupEnabled": true,
+	"canInstallOnRemovableMedia": true,
+	"isGameDvrEnabled": true,
+	"hasExternalInAppProducts": true,
+	"meetAccessibilityGuidelines": true,
+	"notesForCertification": "string",
+	"status": "None",
+	"statusDetails": {
+		"errors": [{
+			"code": "None",
+			"details": "string"
+		}],
+		"warnings": [{
+			"code": "None",
+			"details": "string"
+		}],
+		"certificationReports": [{
+			"date": "2016-03-10T23:07:01.499Z",
+			"reportUrl": "string"
+		}]
+	},
+	"fileUploadUrl": "string",
+	"applicationPackages": [{
+		"fileName": "string",
+		"fileStatus": "PendingDelete",
+		"id": "string",
+		"version": "string",
+		"architecture": "string",
+		"languages": ["string"],
+		"capabilities": ["string"],
+		"minimumDirectXVersion": "None",
+		"minimumSystemRam": "None"
+	}, {
+		"fileName": "package.appxupload",
+		"fileStatus": "PendingUpload"
+	}],
+	"enterpriseLicensing": "None",
+	"allowMicrosoftDecideAppAvailabilityToFutureDeviceFamilies": true,
+	"allowTargetFutureDeviceFamilies": {},
+	"legacyWindowsRevenueSku": "string",
+	"windows10RevenueSku": "string",
+	"friendlyName": "string"
+}
