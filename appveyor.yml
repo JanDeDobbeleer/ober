@@ -120,6 +120,9 @@
   image: Visual Studio 2015
   configuration: Release
   platform: Any CPU
+  environment:
+     CA_KEY:
+       secure: Q1Gvgd7ez+Tu4ACPVjYO5qGG1TNPBRK7HVY4Vth11f5KVQn/v28O+ZpY7UX5z8gV
   assembly_info:
     patch: true
     file: AssemblyInfo.*
@@ -133,3 +136,26 @@
   artifacts:
   - path: bin\Release\Ober.exe
     name: ober
+  test_script:
+  - ps: >-
+      $rootLocation = (Get-Location).Path
+
+      $testArtifact = "$rootLocation\Ober.Test\bin\Release\Ober.Test.dll"
+
+      Set-Location '.\packages\OpenCover.*\tools'
+
+      $target = Resolve-Path "$rootLocation\packages\NUnit.ConsoleRunner.*\tools\nunit3-console.exe"
+
+      Write-Host $targetPath
+
+      .\OpenCover.Console.exe -target:$target -targetargs:$testArtifact -filter:"+[Ober]Ober.Tool.Commands.SubmitCommand +[Ober]Ober.Tool.Localization.StringProvider +[Ober]Ober.Tool.Config*" -output:"$rootLocation\opencover.xml" -register:user
+
+      $wc = New-Object 'System.Net.WebClient'
+
+      $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
+      
+      Set-Location "$rootLocation\packages\Coveralls.io.*\tools"
+
+      .\coveralls.net.exe --opencover "$rootLocation\opencover.xml" --full-sources -r $env:CA_KEY
+
+      Set-Location $rootLocation

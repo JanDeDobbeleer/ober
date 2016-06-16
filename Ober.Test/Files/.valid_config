@@ -1,0 +1,4 @@
+﻿Credentials:
+  ClientId: myId
+  Key: myKey
+  TenantId: myTenantId

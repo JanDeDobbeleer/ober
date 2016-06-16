@@ -62,7 +62,6 @@ namespace Ober.Tool.Commands
             config = null;
             if (File.Exists(configFile))
             {
-                Logger.Debug(string.Format(StringProvider.GetString(Strings.ConfigFound), configFile));
                 var configText = File.OpenText(configFile);
                 var deserializer = new Deserializer();
                 config = deserializer.Deserialize<Config.Config>(configText);
@@ -75,16 +74,13 @@ namespace Ober.Tool.Commands
 
         private bool ValidateConfig(Config.Config config, string configFile)
         {
-            if (string.IsNullOrWhiteSpace(config?.Credentials?.ClientId)
-                    || string.IsNullOrWhiteSpace(config.Credentials?.Key)
-                    || string.IsNullOrWhiteSpace(config.Credentials?.TenantId))
-            {
-                Logger.Error(string.Format(StringProvider.GetString(Strings.ConfigMalformed), configFile));
-                Logger.Info(StringProvider.GetString(Strings.ConfigTemplate));
-                return false;
-            }
-            Logger.Debug(StringProvider.GetString(Strings.ConfigSuccess));
-            return true;
+            if (!string.IsNullOrWhiteSpace(config?.Credentials?.ClientId) &&
+                !string.IsNullOrWhiteSpace(config.Credentials?.Key) &&
+                !string.IsNullOrWhiteSpace(config.Credentials?.TenantId))
+                return true;
+            Logger.Error(string.Format(StringProvider.GetString(Strings.ConfigMalformed), configFile));
+            Logger.Info(StringProvider.GetString(Strings.ConfigTemplate));
+            return false;
         }
     }
 }

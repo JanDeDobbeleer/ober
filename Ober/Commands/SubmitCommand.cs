@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -41,6 +42,8 @@ namespace Ober.Tool.Commands
                 return -1;
             //Create new submission using POST(Success == HttpStatusCode 201 Created)
             var submission = await NewSubmission(_submitOptions);
+            if (submission == null)
+                return -1;
             // Get the JSON object and mark all packages as PendingDelete
             submission = UpdatePackages(_submitOptions, submission, packages);
             // Add the changes using PUT(entire JSON in body)
@@ -60,7 +63,7 @@ namespace Ober.Tool.Commands
             return -1;
         }
 
-        public bool TryValidatePackagesFile(string packagesFile, out IList<string> appPackages)
+        private bool TryValidatePackagesFile(string packagesFile, out IList<string> appPackages)
         {
             appPackages = new List<string>();
             if (!packagesFile.EndsWith(".zip"))
@@ -89,7 +92,7 @@ namespace Ober.Tool.Commands
             return true;
         }
 
-        public async Task<JObject> NewSubmission(SubmitOptions submitOptions)
+        private async Task<JObject> NewSubmission(SubmitOptions submitOptions)
         {
             Tuple<JObject, HttpStatusCode> deployResult;
             Logger.InfoWithProgress(StringProvider.GetString(Strings.SubmitCreating));
@@ -109,7 +112,7 @@ namespace Ober.Tool.Commands
             return null;
         }
 
-        public JObject UpdatePackages(SubmitOptions submitOptions, JObject submission, IEnumerable<string> zipPackages)
+        private JObject UpdatePackages(SubmitOptions submitOptions, JObject submission, IEnumerable<string> zipPackages)
         {
             var packagesReference = string.IsNullOrWhiteSpace(submitOptions.Flight) ? "applicationPackages" : "flightPackages";
             var packages = (JArray)submission[packagesReference];
@@ -128,7 +131,7 @@ namespace Ober.Tool.Commands
             return submission;
         }
 
-        public async Task<bool> UpdateSubmission(SubmitOptions submitOptions, string submissionId, JObject body)
+        private async Task<bool> UpdateSubmission(SubmitOptions submitOptions, string submissionId, JObject body)
         {
             bool updateResult;
             Logger.InfoWithProgress(StringProvider.GetString(Strings.SubmitUpdating));
@@ -144,7 +147,7 @@ namespace Ober.Tool.Commands
             return updateResult;
         }
 
-        public async Task<bool> CommitSubmission(SubmitOptions submitOptions, string submissionId)
+        private async Task<bool> CommitSubmission(SubmitOptions submitOptions, string submissionId)
         {
             bool commitResult;
             Logger.InfoWithProgress(StringProvider.GetString(Strings.SubmitCommitting));
