@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>ober</id>
+    <title>ober</title>
+    <version>%version%</version>
+    <authors>JanJoris</authors>
+    <owners>JanJoris</owners>
+    <licenseUrl>https://github.com/JanJoris/ober/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/JanJoris/ober</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description> 
+      **ober**
+
+      This CLI tool will help you submit .appxupload packages straight to the Windows Store.
+      It uses the submission API to achieve this.
+    </description>
+    <releaseNotes>https://github.com/JanJoris/ober/releases/tag/%version%</releaseNotes>
+    <copyright>© 2016 JanJoris</copyright>
+    <tags>uwp submission API windows store appxupload submit ci cd continuous deployment delivery C# console cli</tags>
+  </metadata>
+</package>

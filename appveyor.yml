@@ -13,6 +13,8 @@
 #       secure: 7CipYchiaJLIPf5MRNnJ2+Nk7dm+FxWkEHlASCcskJbMz+jbdz/qiseUeKCkQKHC
 #     CH_KEY:
 #       secure: TzSbce5fl5R48muEwdnHHl9r1IwKIZ/0qW+D/jbpEIZnGvObscfpymlR20ZfV7PW
+#     NG_KEY:
+#       secure: ax/OF6g19pbEtWJiN00PYQJctHq0hBhnRQZsDDEzHlVCeUuqzcPsWrsEL5ULroGH
 #   assembly_info:
 #     patch: true
 #     file: AssemblyInfo.*
@@ -111,6 +113,36 @@
 #       Write-Host 'Pushing package to chocolatey'
 
 #       choco push "ober.portable.$versionNumber.nupkg"
+
+#       Write-Host 'Starting Nuget deploy'
+
+#       $ng_key = $env:NG_KEY
+
+#       Write-Host 'Copying artifact'
+
+#       Copy-Item -Path .\Ober\bin\Release\Ober.exe -Destination .\nuget\ober.exe
+
+#       Write-Host 'Changing location'
+
+#       Set-Location -Path .\nuget
+
+#       Write-Host "Setting version number: $versionNumber"
+
+#       (Get-Content '.\ober.nuspec' -Raw).Replace('%version%', $versionNumber) | Out-File -Encoding 'UTF8' '.\ober.nuspec'
+
+#       Write-Host 'Creating package'
+
+#       nuget pack .\ober.nuspec
+
+#       Write-Host 'Uploading artifact'
+
+#       Push-AppveyorArtifact ".\ober.$versionNumber.nupkg"
+
+#       nuget setApiKey $ng_key -Source https://www.nuget.org/api/v2/package
+
+#       Write-Host 'Pushing package to Nuget'
+
+#       nuget push "ober.$versionNumber.nupkg" -Source https://www.nuget.org/api/v2/package
 
 
 # default build config, no deployment, no artifacts
