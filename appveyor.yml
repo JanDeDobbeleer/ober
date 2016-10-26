@@ -1,193 +1,111 @@
-#release, build and deploy
-# -
-#   branches:
-#     only:
-#       - master
-#   skip_tags: true
-#   version: 0.5.{build}
-#   image: Visual Studio 2015
-#   configuration: Release
-#   platform: Any CPU
-#   environment:
-#     GH_KEY:
-#       secure: 7CipYchiaJLIPf5MRNnJ2+Nk7dm+FxWkEHlASCcskJbMz+jbdz/qiseUeKCkQKHC
-#     CH_KEY:
-#       secure: TzSbce5fl5R48muEwdnHHl9r1IwKIZ/0qW+D/jbpEIZnGvObscfpymlR20ZfV7PW
-#     NG_KEY:
-#       secure: ax/OF6g19pbEtWJiN00PYQJctHq0hBhnRQZsDDEzHlVCeUuqzcPsWrsEL5ULroGH
-#   assembly_info:
-#     patch: true
-#     file: AssemblyInfo.*
-#     assembly_version: "{version}.0"
-#     assembly_file_version: "{version}.0"
-#   before_build:
-#   - cmd: nuget restore
-#   build:
-#     project: Ober.sln
-#     verbosity: minimal
-#   artifacts:
-#   - path: bin\Release\Ober.exe
-#     name: ober
-#   deploy_script:
-#   - ps: >-
-#       #Create GitHub release
-
-#       $versionNumber = $ENV:APPVEYOR_BUILD_VERSION
-
-#       $gh_key = $env:GH_KEY
-
-#       Write-Host 'Starting GitHub release'
-
-#       $releaseData = @{
-#           tag_name         = $versionNumber
-#           target_commitish = 'master'
-#           name             = $versionNumber
-#           draft            = $false
-#           prerelease       = $false
-#       }
-
-#       $auth = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($gh_key + ':x-oauth-basic'))
-
-#       $releaseParams = @{
-#           Uri         = 'https://api.github.com/repos/janjoris/ober/releases'
-#           Method      = 'POST'
-#           Headers     = @{
-#               Authorization = $auth
-#           }
-#           ContentType = 'application/json'
-#           Body        = (ConvertTo-Json -InputObject $releaseData -Compress)
-#       }
-
-#       $result = Invoke-RestMethod @releaseParams
-
-#       $uploadUri = $result | Select-Object -ExpandProperty upload_url
-
-#       $uploadUri = $uploadUri -creplace '\{\?name,label\}'  #, "?name=ober.exe"
-
-#       $uploadUri = $uploadUri + "?name=ober.exe"
-
-#       $uploadParams = @{
-#           Uri         = $uploadUri
-#           Method      = 'POST'
-#           Headers     = @{
-#               Authorization = $auth
-#           }
-#           ContentType = 'application/zip'
-#           InFile      = ".\bin\Release\Ober.exe"
-#       }
-
-#       $result = Invoke-RestMethod @uploadParams
-
-#       Write-Host 'GitHub release completed'
-
-#       # Create Chocolately Package
-
-#       Write-Host 'Starting Chocolatey deploy'
-
-#       $ch_key = $env:CH_KEY
-
-#       Write-Host 'Copying artifact'
-
-#       Copy-Item -Path .\Ober\bin\Release\Ober.exe -Destination .\chocolatey\tools\ober.exe
-
-#       Write-Host 'Changing location'
-
-#       Set-Location -Path .\chocolatey
-
-#       Write-Host "Setting version number: $versionNumber"
-
-#       (Get-Content '.\ober.portable.nuspec' -Raw).Replace('%version%', $versionNumber) | Out-File -Encoding 'UTF8' '.\ober.portable.nuspec'
-
-#       (Get-Content '.\tools\VERIFICATION.txt' -Raw).Replace('%version%', $versionNumber) | Out-File -Encoding 'UTF8' '.\tools\VERIFICATION.txt'
-
-#       Write-Host 'Creating package'
-
-#       cpack
-
-#       Write-Host 'Uploading artifact'
-
-#       Push-AppveyorArtifact ".\ober.portable.$versionNumber.nupkg"
-
-#       choco apiKey -k $ch_key -source https://chocolatey.org/
-
-#       Write-Host 'Pushing package to chocolatey'
-
-#       choco push "ober.portable.$versionNumber.nupkg"
-
-#       Write-Host 'Starting Nuget deploy'
-
-#       $ng_key = $env:NG_KEY
-
-#       Write-Host 'Copying artifact'
-
-#       Copy-Item -Path .\Ober\bin\Release\Ober.exe -Destination .\nuget\ober.exe
-
-#       Write-Host 'Changing location'
-
-#       Set-Location -Path .\nuget
-
-#       Write-Host "Setting version number: $versionNumber"
-
-#       (Get-Content '.\ober.nuspec' -Raw).Replace('%version%', $versionNumber) | Out-File -Encoding 'UTF8' '.\ober.nuspec'
-
-#       Write-Host 'Creating package'
-
-#       nuget pack .\ober.nuspec
-
-#       Write-Host 'Uploading artifact'
-
-#       Push-AppveyorArtifact ".\ober.$versionNumber.nupkg"
-
-#       nuget setApiKey $ng_key -Source https://www.nuget.org/api/v2/package
-
-#       Write-Host 'Pushing package to Nuget'
-
-#       nuget push "ober.$versionNumber.nupkg" -Source https://www.nuget.org/api/v2/package
-
-
-# default build config, no deployment, no artifacts
--
-  skip_tags: true
-  version: 0.0.{build}
-  image: Visual Studio 2015
-  configuration: Release
-  platform: Any CPU
-  environment:
-     CA_KEY:
-       secure: Q1Gvgd7ez+Tu4ACPVjYO5qGG1TNPBRK7HVY4Vth11f5KVQn/v28O+ZpY7UX5z8gV
-  assembly_info:
-    patch: true
-    file: AssemblyInfo.*
-    assembly_version: "{version}.0"
-    assembly_file_version: "{version}.0"
-  before_build:
-  - cmd: nuget restore
-  build:
-    project: Ober.sln
-    verbosity: minimal
-  artifacts:
-  - path: bin\Release\Ober.exe
-    name: ober
-  test_script:
+skip_tags: true
+version: 0.5.{build}
+image: Visual Studio 2015
+configuration: Release
+platform: Any CPU
+environment:
+  GH_KEY:
+    secure: 7CipYchiaJLIPf5MRNnJ2+Nk7dm+FxWkEHlASCcskJbMz+jbdz/qiseUeKCkQKHC
+  CH_KEY:
+    secure: TzSbce5fl5R48muEwdnHHl9r1IwKIZ/0qW+D/jbpEIZnGvObscfpymlR20ZfV7PW
+  NG_KEY:
+    secure: ax/OF6g19pbEtWJiN00PYQJctHq0hBhnRQZsDDEzHlVCeUuqzcPsWrsEL5ULroGH
+  CA_KEY:
+     secure: Q1Gvgd7ez+Tu4ACPVjYO5qGG1TNPBRK7HVY4Vth11f5KVQn/v28O+ZpY7UX5z8gV
+assembly_info:
+  patch: true
+  file: AssemblyInfo.*
+  assembly_version: "{version}.0"
+  assembly_file_version: "{version}.0"
+before_build:
+ - cmd: nuget restore
+build:
+  project: Ober.sln
+  verbosity: minimal
+artifacts:
+- path: Ober\bin\Release\Ober.exe
+  name: ober
+test_script:
+  - ps: $rootLocation = (Get-Location).Path
+  - ps: $testArtifact = "$rootLocation\Ober.Test\bin\Release\Ober.Test.dll"
+  - ps: Set-Location '.\packages\OpenCover.*\tools'
+  - ps: $target = Resolve-Path "$rootLocation\packages\NUnit.ConsoleRunner.*\tools\nunit3-console.exe"
+  - ps: Write-Host $targetPath
+  - ps: .\OpenCover.Console.exe -target:$target -targetargs:$testArtifact -filter:"+[Ober]Ober.Tool.Commands.SubmitCommand +[Ober]Ober.Tool.Localization.StringProvider +[Ober]Ober.Tool.Config*" -output:"$rootLocation\opencover.xml" -register:user
+  - ps: $wc = New-Object 'System.Net.WebClient'
+  - ps: $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))      
+  - ps: Set-Location "$rootLocation\packages\Coveralls.io.*\tools"
+  - ps: .\coveralls.net.exe --opencover "$rootLocation\opencover.xml" --full-sources -r $env:CA_KEY
+  - ps: Set-Location $rootLocation
+deploy_script:
   - ps: >-
-      $rootLocation = (Get-Location).Path
-
-      $testArtifact = "$rootLocation\Ober.Test\bin\Release\Ober.Test.dll"
-
-      Set-Location '.\packages\OpenCover.*\tools'
-
-      $target = Resolve-Path "$rootLocation\packages\NUnit.ConsoleRunner.*\tools\nunit3-console.exe"
-
-      Write-Host $targetPath
-
-      .\OpenCover.Console.exe -target:$target -targetargs:$testArtifact -filter:"+[Ober]Ober.Tool.Commands.SubmitCommand +[Ober]Ober.Tool.Localization.StringProvider +[Ober]Ober.Tool.Config*" -output:"$rootLocation\opencover.xml" -register:user
-
-      $wc = New-Object 'System.Net.WebClient'
-
-      $wc.UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestResult.xml))
-      
-      Set-Location "$rootLocation\packages\Coveralls.io.*\tools"
-
-      .\coveralls.net.exe --opencover "$rootLocation\opencover.xml" --full-sources -r $env:CA_KEY
-
-      Set-Location $rootLocation
+      if ($ENV:APPVEYOR_REPO_BRANCH -eq 'master' -and [string]::IsNullOrWhiteSpace($ENV:APPVEYOR_PULL_REQUEST_NUMBER)) {
+        #Create GitHub release
+        $versionNumber = $ENV:APPVEYOR_BUILD_VERSION
+        $gh_key = $env:GH_KEY
+        Write-Host 'Starting GitHub release'
+        $releaseData = @{
+            tag_name         = $versionNumber
+            target_commitish = 'master'
+            name             = $versionNumber
+            draft            = $false
+            prerelease       = $false
+        }
+        $auth = 'Basic ' + [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes($gh_key + ':x-oauth-basic'))
+        $releaseParams = @{
+            Uri         = 'https://api.github.com/repos/janjoris/ober/releases'
+            Method      = 'POST'
+            Headers     = @{
+                Authorization = $auth
+            }
+            ContentType = 'application/json'
+            Body        = (ConvertTo-Json -InputObject $releaseData -Compress)
+        }
+        $result = Invoke-RestMethod @releaseParams
+        $uploadUri = $result | Select-Object -ExpandProperty upload_url
+        $uploadUri = $uploadUri -creplace '\{\?name,label\}'  #, "?name=ober.exe"
+        $uploadUri = $uploadUri + "?name=ober.exe"
+        $uploadParams = @{
+            Uri         = $uploadUri
+            Method      = 'POST'
+            Headers     = @{
+                Authorization = $auth
+            }
+            ContentType = 'application/zip'
+            InFile      = ".\Ober\bin\Release\Ober.exe"
+        }
+        $result = Invoke-RestMethod @uploadParams
+        Write-Host 'GitHub release completed'
+        # Create Chocolately Package
+        Write-Host 'Starting Chocolatey deploy'
+        $ch_key = $env:CH_KEY
+        Write-Host 'Copying artifact'
+        Copy-Item -Path .\Ober\bin\Release\Ober.exe -Destination .\chocolatey\tools\ober.exe
+        Write-Host 'Changing location'
+        Set-Location -Path .\chocolatey
+        Write-Host "Setting version number: $versionNumber"
+        (Get-Content '.\ober.portable.nuspec' -Raw).Replace('%version%', $versionNumber) | Out-File -Encoding 'UTF8' '.\ober.portable.nuspec'
+        (Get-Content '.\tools\VERIFICATION.txt' -Raw).Replace('%version%', $versionNumber) | Out-File -Encoding 'UTF8' '.\tools\VERIFICATION.txt'
+        Write-Host 'Creating package'
+        cpack
+        Write-Host 'Uploading artifact'
+        Push-AppveyorArtifact ".\ober.portable.$versionNumber.nupkg"
+        choco apiKey -k $ch_key -source https://chocolatey.org/
+        Write-Host 'Pushing package to chocolatey'
+        choco push "ober.portable.$versionNumber.nupkg"
+        Write-Host 'Starting Nuget deploy'
+        $ng_key = $env:NG_KEY
+        Write-Host 'Copying artifact'
+        Copy-Item -Path .\Ober\bin\Release\Ober.exe -Destination .\nuget\ober.exe
+        Write-Host 'Changing location'
+        Set-Location -Path .\nuget
+        Write-Host "Setting version number: $versionNumber"
+        (Get-Content '.\ober.nuspec' -Raw).Replace('%version%', $versionNumber) | Out-File -Encoding 'UTF8' '.\ober.nuspec'
+        Write-Host 'Creating package'
+        nuget pack .\ober.nuspec
+        Write-Host 'Uploading artifact'
+        Push-AppveyorArtifact ".\ober.$versionNumber.nupkg"
+        nuget setApiKey $ng_key -Source https://www.nuget.org/api/v2/package
+        Write-Host 'Pushing package to Nuget'
+        nuget push "ober.$versionNumber.nupkg" -Source https://www.nuget.org/api/v2/package
+      }
